@@ -24,6 +24,7 @@ public class Customer {
     @Temporal(TemporalType.DATE)
     private Date birthday;
 
+
     public int getId() {
         return id;
     }

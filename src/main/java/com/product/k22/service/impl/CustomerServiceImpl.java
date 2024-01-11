@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private EntityManagerFactory factory;
-
     private EntityManager entityManager;
 
     @Override

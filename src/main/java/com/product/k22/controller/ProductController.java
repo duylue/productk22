@@ -1,21 +1,25 @@
 package com.product.k22.controller;
 
 import com.product.k22.model.Category;
+import com.product.k22.model.FileInfo;
 import com.product.k22.model.Product;
 import com.product.k22.service.CategoryService;
+import com.product.k22.service.FileService;
 import com.product.k22.service.ProductService;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,10 +30,13 @@ public class ProductController {
     private CategoryService categoryService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private FileService fileService;
 
     @GetMapping("/list")
-    public String getList(Model model) {
+    public String getList(Model model, HttpServletResponse response, HttpServletRequest request) {
 //        ArrayList<Product> list = productService.getList();
+        Cookie [] cookies = request.getCookies();
         List<Map<String, Object>> list = productService.getListDetail();
 
         model.addAttribute("list", list);
@@ -54,12 +61,21 @@ public class ProductController {
 
     @PostMapping("/save")
     public String saveProduct(@ModelAttribute @Validated Product p, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
-            return "/product/save";
-        }
+
         p.setSid(1);
         productService.save(p);
+        return "redirect:/product/upload?pid="+p.getPid();
+    }
+    @PostMapping("/upload")
+    public String upload(@RequestParam int pid , @RequestParam MultipartFile file) {
+     fileService.uploadFile(pid,file);
         return "redirect:/product/list";
     }
 
+    @GetMapping ("/get-file")
+    public ResponseEntity<?> getFile(@RequestParam int pid ) {
+        FileInfo fileInfo = fileService.getFile(pid);
+        return ResponseEntity.status(200).contentType(MediaType.parseMediaType(fileInfo.getContentType()))
+                .body(fileInfo.getContent());
+    }
 }

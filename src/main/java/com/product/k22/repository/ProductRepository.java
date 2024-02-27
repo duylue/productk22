@@ -17,6 +17,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "where p.cid = c.cid and s.sid = p.sid", nativeQuery = true)
     List<Map<String, Object>> getlist();
 
-
+    List<Product> findByPidAndPname(int id, String pname);
+    @Query(value = "select * from product where pid = :id and  cid = :cid and sid = :sid and pid = :id ",nativeQuery = true)
+    Product findByPidAndPnameQuery(@Param("id") int id,@Param("cid") int cid, @Param("sid") int sid);
 
 }

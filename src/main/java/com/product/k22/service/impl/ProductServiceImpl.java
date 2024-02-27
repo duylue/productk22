@@ -17,6 +17,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ArrayList<Product> getList() {
+Product products = productRepository.findByPidAndPnameQuery(3,1,1);
         return (ArrayList<Product>) productRepository.findAll();
     }
 
@@ -39,6 +40,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findById(int id) {
+
         return productRepository.findById(id).get();
     }
 }

@@ -17,4 +17,6 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
             "and e.eid = o.eid\n" +
             "and od.pid = p.pid and o.cust_id = :cid",nativeQuery = true)
     List<Map<String, Object>> getCusDetail(@Param("cid") int cid);
+
+
 }

@@ -11,5 +11,5 @@ public interface CategoryService {
     int save(Category category);
     void delete( int id);
     Category findById(int id);
-    Map<String, Object> getProductDetail( int id, int cid);
+
 }

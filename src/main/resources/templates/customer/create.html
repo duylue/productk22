@@ -20,18 +20,30 @@
 
 <form style="width: 600px; margin-left: 300px" th:object="${customer}"
       action="http://localhost:8080/customer/save" method="post">
-  <h1>Thêm Điểm Mới</h1>
+  <h1>Thêm KH Mới</h1>
 
-    <input type="text" class="form-control" th:field="*{id}" hidden="hidden">
+    <input type="text" class="form-control" th:field="*{custId}" hidden="hidden">
 
   <div class="mb-3">
     <label class="form-label">Name</label>
-    <input type="text" class="form-control" th:field="*{name}">
+    <input type="text" class="form-control" th:field="*{custName}">
   </div>
   <div class="mb-3">
     <label class="form-label">birthday</label>
     <input type="date" class="form-control" th:field="*{birthday}">
   </div>
+  <div class="mb-3">
+    <label class="form-label">phone</label>
+    <input type="text" class="form-control" th:field="*{phone}">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">address : </label>
+    <select th:field="*{aid}">
+      <option th:each="a :${aList}" th:text="${a.province}" th:value="${a.aid}"></option>
+    </select>
+  </div>
+
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </body>

@@ -24,12 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public int save(Category category) {
         Category temp = categoryRepository.save(category);
-        return temp.getCategoryId();
-    }
-
-    @Override
-    public Map<String, Object> getProductDetail(int id, int cid) {
-        return categoryRepository.getProductDetail(id,cid);
+        return temp.getCid();
     }
 
     @Override

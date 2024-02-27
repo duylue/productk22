@@ -22,21 +22,23 @@
       action="http://localhost:8080/product/save" method="post">
     <h1>Thêm sp Mới</h1>
 
-    <input type="text" class="form-control" th:field="*{id}" hidden="hidden">
+    <input type="text" class="form-control" th:field="*{pid}" hidden="hidden">
 
     <div class="mb-3">
         <label class="form-label">Product Name</label>
         <input type="text" class="form-control" th:field="*{pname}">
+        <div><p  th:errors="*{pname}" th:if="${#fields.hasErrors('pname')}"></p></div>
     </div>
     <div class="mb-3">
         <label class="form-label">category id</label>
-        <select th:field="*{categoryId}">
-            <option th:each="c : ${cList}" th:value="${c.categoryId}" th:text="${c.getCategoryName()}"></option>
+        <select th:field="*{cid}">
+            <option th:each="c : ${cList}" th:value="${c.cid}" th:text="${c.cname}"></option>
         </select>
     </div>
     <div class="mb-3">
         <label class="form-label">Product Price</label>
         <input type="text" class="form-control" th:field="*{price}">
+        <p th:errors="*{price}" th:if="${#fields.hasErrors('price')}"></p>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

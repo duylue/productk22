@@ -4,13 +4,16 @@ import com.product.k22.model.Category;
 import com.product.k22.model.Product;
 import com.product.k22.service.CategoryService;
 import com.product.k22.service.ProductService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,24 +29,35 @@ public class ProductController {
 
     @GetMapping("/list")
     public String getList(Model model) {
-        Map<String, Object> map = categoryService.getProductDetail(1,1);
-        ArrayList<Product> list = productService.getList();
-        List<Map<String, Object>> maps = productService.getListDetail();
-        model.addAttribute("list", maps);
+//        ArrayList<Product> list = productService.getList();
+        List<Map<String, Object>> list = productService.getListDetail();
+
+        model.addAttribute("list", list);
         return "product/list";
     }
+//    @GetMapping("/test")
+//    public String test(Model model) {
+//        List<Map<String, Object>> maps = productService.getListDetail();
+//        model.addAttribute("list", maps);
+//        return "product/list";
+//    }
 
     @GetMapping("/save")
     public String save(Model model) {
+
         model.addAttribute("product", new Product());
         List<Category> cList = categoryService.getlist();
         model.addAttribute("cList", cList);
+
         return "/product/save";
     }
 
     @PostMapping("/save")
-    public String saveProduct(@ModelAttribute Product p) {
-        p.setStatusId(1);
+    public String saveProduct(@ModelAttribute @Validated Product p, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "/product/save";
+        }
+        p.setSid(1);
         productService.save(p);
         return "redirect:/product/list";
     }

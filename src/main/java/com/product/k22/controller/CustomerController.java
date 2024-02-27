@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/customer")
@@ -17,12 +19,14 @@ public class CustomerController {
     @GetMapping("/list")
     public String getList(Model model){
         ArrayList<Customer> list = customerService.getList();
-        System.out.println(list.get(0).getId());
         model.addAttribute("list",list);
+
         return "customer/list";
     }
     @GetMapping("/create")
     public String create(Model model){
+        List<Map<String, Object>> addList = customerService.getListAddress();
+        model.addAttribute("aList",addList);
         model.addAttribute("customer",new Customer());
         return "customer/create";
     }
@@ -36,5 +40,11 @@ public class CustomerController {
     public String save(Model model, @ModelAttribute Customer customer){
         customerService.create(customer);
         return "redirect:/customer/list";
+    }
+    @GetMapping("/detail")
+    public String detail(Model model, @RequestParam int id){
+      List<Map<String,Object>> list = customerService.getCusDetail(id);
+        model.addAttribute("list",list);
+        return "customer/detail";
     }
 }

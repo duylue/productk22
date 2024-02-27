@@ -12,13 +12,11 @@ import java.util.Objects;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-    @Query(value = "select p.* , c.category_name from product p\n" +
-            ", category c\n" +
-            "where c.category_id=p.category_id", nativeQuery = true)
+    @Query(value = "select p.*, c.cname ,s.sname\n" +
+            "from  product p, category c, status s\n" +
+            "where p.cid = c.cid and s.sid = p.sid", nativeQuery = true)
     List<Map<String, Object>> getlist();
 
-    @Query(value = "select p.* , c.category_name from product p\n" +
-            ", category c\n" +
-            "where c.category_id=p.category_id and p.id = :id and category = :cid", nativeQuery = true)
-    Map<String, Object> getProductDetail(@Param("id") int id,@Param("cid") int cid);
+
+
 }

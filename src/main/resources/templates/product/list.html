@@ -9,7 +9,7 @@
 <body>
 <div class="container">
 
-    <a class="btn btn-success" href="http://localhost:8080/product/save">Tạo Mới Điểm</a>
+    <a class="btn btn-success" href="http://localhost:8080/product/save">Tạo Sản phẩm mới</a>
     <br>
     <table class="table-success table" style="margin-top: 20px" >
         <thead>
@@ -23,16 +23,16 @@
         </thead>
         <tbody >
         <tr class="table-success" th:each="p : ${list}">
-            <td class="table-success" th:text="${p.id}"></td>
+            <td class="table-success" th:text="${p.pid}"></td>
             <td class="table-success" th:text="${p.pname}"></td>
-            <td class="table-success" th:text="${p.status_id}"></td>
-            <td class="table-success" th:text="${p.category_name}"></td>
+            <td class="table-success" th:text="${p.sname}"></td>
+            <td class="table-success" th:text="${p.cname}"></td>
             <td class="table-success" th:text="${p.price}"></td>
             <td class="table-success"><a class="btn btn-success"
-                                         th:href="@{http://localhost:8080/product/update(id=${p.id})}">Sửa</a>
+                                         th:href="@{http://localhost:8080/product/update(id=${p.pid})}">Sửa</a>
             </td>
             <td class="table-success"><a class="btn btn-success"
-                                         th:href="@{http://localhost:8080/product/delete(id=${p.id})}">Xóa</a>
+                                         th:href="@{http://localhost:8080/product/delete(id=${p.pid})}">Xóa</a>
             </td>
         </tr>
         </tbody>

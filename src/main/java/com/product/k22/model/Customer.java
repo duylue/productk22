@@ -13,39 +13,18 @@ import java.util.Date;
 
 
 @Entity
+@Getter
+@Setter
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(name = "full_name", length = 20,nullable = false)
-    private String name;
+    private int custId;
+    private String custName;
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern = "dd-MM-yyyy")
     @Temporal(TemporalType.DATE)
     private Date birthday;
+    private String phone;
+    private int aid;
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
 }

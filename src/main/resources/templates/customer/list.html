@@ -15,16 +15,20 @@
         <thead>
         <th scope="col">id</th>
         <th scope="col">name</th>
-        <th scope="col">age</th>
+        <th scope="col">aid</th>
+        <th scope="col">birthday</th>
+        <th scope="col">phone</th>
         </tr>
         </thead>
         <tbody >
         <tr class="table-success" th:each="c : ${list}">
-            <td class="table-success" th:text="${c.getId()}"></td>
-            <td class="table-success" th:text="${c.getName()}"></td>
+            <td class="table-success" th:text="${c.getCustId()}"></td>
+            <td class="table-success" th:text="${c.custName}"></td>
+            <td class="table-success" th:text="${c.aid}"></td>
             <td class="table-success" th:text="${c.getBirthday()}"></td>
+            <td class="table-success" th:text="${c.phone}"></td>
 
-<!--            <td class="table-success"><a class="btn btn-success" th:href="@{http://localhost:8080/student/score/update(id=${sc.scid})}">Sửa</a></td>-->
+            <td class="table-success"><a class="btn btn-success" th:href="@{http://localhost:8080/customer/detail(id=${c.getCustId()})}">Detail</a></td>
 <!--            <td class="table-success"><a class="btn btn-success" th:href="@{http://localhost:8080/student/score/delete(id=${sc.scid})}">Xóa</a></td>-->
         </tr>
         </tbody>

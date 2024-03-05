@@ -40,7 +40,7 @@ public class SaleController {
         session.setAttribute("list",list);
         return "redirect:/sale";
     }
-
+//AVC
     @GetMapping("/cart")
     public String cart(Model model ,HttpServletRequest request) {
         HttpSession session = request.getSession();

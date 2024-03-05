@@ -71,7 +71,11 @@ public class ProductController {
      fileService.uploadFile(pid,file);
         return "redirect:/product/list";
     }
-
+    @GetMapping("/upload")
+    public String uploadFile(@RequestParam int pid , Model model) {
+        model.addAttribute("pid",pid);
+        return "/product/uploadFile";
+    }
     @GetMapping ("/get-file")
     public ResponseEntity<?> getFile(@RequestParam int pid ) {
         FileInfo fileInfo = fileService.getFile(pid);

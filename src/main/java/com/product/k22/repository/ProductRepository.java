@@ -16,6 +16,15 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "from  product p, category c, status s\n" +
             "where p.cid = c.cid and s.sid = p.sid order by p.pid desc", nativeQuery = true)
     List<Map<String, Object>> getlist();
+
+    @Query(value = "select p.*, c.cname ,s.sname\n" +
+            "from  product p, category c, status s\n" +
+            "where p.cid = c.cid and s.sid = p.sid and p.pid = ? ", nativeQuery = true)
+  Map<String, Object> getProductDetail(int id);
+    @Query(value = "select p.*, c.cname ,s.sname\n" +
+            "from  product p, category c, status s\n" +
+            "where p.cid = c.cid and s.sid = p.sid ? ", nativeQuery = true)
+    Map<String, Object> getProductDetail(String id);
     List<Product> findByPidAndPname(int id, String pname);
     @Query(value = "select * from product where pid = :id and  cid = :cid and sid = :sid and pid = :id ",nativeQuery = true)
     Product findByPidAndPnameQuery(@Param("id") int id,@Param("cid") int cid, @Param("sid") int sid);

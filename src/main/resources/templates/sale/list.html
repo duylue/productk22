@@ -57,18 +57,31 @@
                                 href="/sale/cart"
                         >
                             <i class="bi bi-cart">
+                            <i class="bi bi-cart">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-cart" viewBox="0 0 16 16">
                                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                                 </svg>
                             </i>
+                                <i></i>
                             <span th:if="${size} > 0" class="badge rounded-pill badge-notification bg-danger" th:text="${size}" ></span>
                         </a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form class="d-flex" action="/sale/search">
+                    <label class="form-label">gia</label>
+                    <select name="priceId">
+                        <option value="1">0 - 2000</option>
+                        <option value="2">2000 - 5000</option>
+                        <option value="3"> > 5000</option>
+                    </select>
+                    <label class="form-label">category id</label>
+                    <select name="cid">
+                        <option th:each="c : ${cList}" th:value="${c.cid}" th:text="${c.cname}"></option>
+                    </select>
+                    <input class="form-control me-2" type="search" name="pname" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
+
                 </form>
             </div>
         </div>
@@ -77,13 +90,13 @@
         <div class="row">
             <div class="col-md-3" th:each="p : ${list}">
                 <div class="card mg" style="width: 18rem;">
-                    <img th:src="@{http://localhost:8080/product/get-file(pid=${p.get('pid')})}"
+                    <img th:src="@{http://localhost:8080/product/get-file(pid=${p.pid})}"
                          class="card-img-top sz">
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${p.get('pname')}"></h5>
-                        <p class="card-text" th:text="${p.get('cname')}"></p>
-                        <p class="card-text" th:text="${p.get('price') + ' vnd'}"></p>
-                        <a th:href="@{http://localhost:8080/sale/add-cart(pid=${p.get('pid')})}" class="btn btn-primary">Add Card</a>
+                        <h5 class="card-title" th:text="${p.pname}"></h5>
+                        <p class="card-text" th:text="${p.cname}"></p>
+                        <p class="card-text" th:text="${p.price + ' vnd'}"></p>
+                        <a th:href="@{http://localhost:8080/sale/add-cart(pid=${p.pid})}" class="btn btn-primary">Add Card</a>
                     </div>
                 </div>
             </div>

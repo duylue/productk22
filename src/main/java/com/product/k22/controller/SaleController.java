@@ -1,6 +1,9 @@
 package com.product.k22.controller;
 
+import com.product.k22.dto.ProductDTO;
+import com.product.k22.model.Category;
 import com.product.k22.model.Product;
+import com.product.k22.repository.CategoryRepository;
 import com.product.k22.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -18,17 +21,43 @@ import java.util.Map;
 public class SaleController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private CategoryRepository categoryRepository;
     @GetMapping
     public String list(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         ArrayList<Integer> list = (ArrayList<Integer>) session.getAttribute("list");
+        int size = 0;
         if (list!=null){
-            model.addAttribute("size",list.size());
+        size = list.size();
         }
-        List<Map<String,Object>> maps = productService.getListDetail();
-        model.addAttribute("list",maps);
+        List<Category> clist = categoryRepository.findAll();
+        model.addAttribute("size",size);
+        model.addAttribute("cList",clist);
+        List<ProductDTO> productDTOList = productService.getProductDetail(0,"",0);
+        model.addAttribute("list",productDTOList);
         return "sale/list";
     }
+    @GetMapping("/search")
+    public String search(Model model, HttpServletRequest request,@RequestParam int cid,
+                         @RequestParam String pname, @RequestParam int priceId) {
+        HttpSession session = request.getSession();
+        ArrayList<Integer> list = (ArrayList<Integer>) session.getAttribute("list");
+        int size = 0;
+        if (list!=null){
+            size = list.size();
+        }
+        List<Category> clist = categoryRepository.findAll();
+        model.addAttribute("size",size);
+        model.addAttribute("cList",clist);
+        List<ProductDTO> productDTOList = productService.getProductDetail(cid,pname,priceId);
+        model.addAttribute("list",productDTOList);
+        return "sale/list";
+    }
+
+
+
+
 
     @GetMapping("/add-cart")
     public String cartAdd(Model model, @RequestParam int pid,HttpServletRequest request) {
@@ -45,11 +74,11 @@ public class SaleController {
     public String cart(Model model ,HttpServletRequest request) {
         HttpSession session = request.getSession();
         ArrayList<Integer> list = (ArrayList<Integer>) session.getAttribute("list");
-        ArrayList<Product> productList = new ArrayList<>();
-        if (list.isEmpty()){
+        ArrayList<Map<String, Object>> productList = new ArrayList<>();
+        if (list!= null && !list.isEmpty()){
             for (int id: list) {
-                Product product = productService.findById(id);
-                productList.add(product);
+                Map<String, Object> map= productService.getProductDetail(id);
+                productList.add(map);
             }
         }
         model.addAttribute("list",productList);

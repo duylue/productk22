@@ -68,11 +68,17 @@ public class ProductController {
     }
     @PostMapping("/upload")
     public String upload(@RequestParam int pid , @RequestParam MultipartFile file) {
-     fileService.uploadFile(pid,file);
+        int fid = fileService.findFid(pid);
+     fileService.uploadFile(pid,file,fid);
         return "redirect:/product/list";
     }
     @GetMapping("/upload")
     public String uploadFile(@RequestParam int pid , Model model) {
+        model.addAttribute("pid",pid);
+        return "/product/uploadFile";
+    }
+    @GetMapping("/updateImage")
+    public String updateImage(@RequestParam int pid , Model model) {
         model.addAttribute("pid",pid);
         return "/product/uploadFile";
     }

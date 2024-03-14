@@ -13,9 +13,12 @@ public class FileServiceImpl implements FileService {
     private FileRepository fileRepository;
 
     @Override
-    public void uploadFile(int pid, MultipartFile file) {
+    public void uploadFile(int pid, MultipartFile file, int fid) {
         FileInfo fileInfo = new FileInfo();
         fileInfo.setPid(pid);
+        if (fid>0){
+            fileInfo.setFid(fid);
+        }
         try {
             fileInfo.setFileName(file.getOriginalFilename());
             fileInfo.setContentType(file.getContentType());
@@ -25,6 +28,15 @@ public class FileServiceImpl implements FileService {
 
         }
 
+    }
+
+    @Override
+    public int findFid(int pid) {
+        String fid = fileRepository.findFid(pid);
+        if (fid == null){
+            return -1;
+        }
+        return Integer.parseInt(fid);
     }
 
     @Override

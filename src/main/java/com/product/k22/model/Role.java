@@ -15,7 +15,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int rid;
     private String rname;
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles",cascade = CascadeType.ALL,
+    fetch = FetchType.EAGER)
     private List<User> users;
 
 }

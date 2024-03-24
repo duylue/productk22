@@ -27,6 +27,12 @@
     <label class="form-label">Password</label>
     <input type="text" class="form-control" th:field="*{password}">
   </div>
+  <div th:each="role : ${listRole}">
+  <div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" name="roleIds" th:value="${role.getRid()}"  id="flexSwitchCheckDefault">
+    <label class="form-check-label" for="flexSwitchCheckDefault" th:text="${role.rname}"></label>
+  </div>
+  </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </body>

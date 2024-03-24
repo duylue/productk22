@@ -14,10 +14,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int uid;
+    @Column(unique = true)
     private String username;
     private String password;
     private String name;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "Users_Roles",joinColumns = {@JoinColumn(name = "uid")},
             inverseJoinColumns ={@JoinColumn(name = "rid")})
     private List<Role> roles;
